@@ -23,7 +23,7 @@ export default function Login() {
 
   const notifyBackend = async (token: string) => {
     try {
-      await fetch("http://localhost:8080/auth/login", {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -34,7 +34,7 @@ export default function Login() {
 
   const registerWithBackend = async (email: string, name: string) => {
     try {
-      await fetch("http://localhost:8080/auth/register", {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name }),

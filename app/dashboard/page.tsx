@@ -34,7 +34,7 @@ export default function Dashboard() {
   }, [router]);
 
   const fetchEndpoints = () => {
-    fetch("http://localhost:8080/apis/get-endpoints")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/apis/get-endpoints`)
       .then((res) => res.json())
       .then((data) => setEndpoints(data));
   };
@@ -49,7 +49,7 @@ export default function Dashboard() {
   };
 
   const handleDelete = async (id: string) => {
-    await fetch(`http://localhost:8080/apis/${id}`, { method: "DELETE" });
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/apis/${id}`, { method: "DELETE" });
     fetchEndpoints();
   };
 

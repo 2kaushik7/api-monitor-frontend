@@ -23,7 +23,7 @@ export default function AddEndpointModal({ onClose, onSuccess, userEmail }: AddE
     setLoading(true);
     try {
       const payload = { url, alertEmail, userEmail };
-      const res = await fetch("http://localhost:8080/apis/add-api", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/apis/add-api`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
