@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { auth } from "@/app/lib/firebase";
 import { signOut, onAuthStateChanged, User } from "firebase/auth";
 import AddEndpointModal from "@/app/components/AddEndpointModal";
+import PricingModal from "@/app/components/PricingModal";
 
 interface Endpoint {
   id: string;
@@ -21,6 +22,7 @@ export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showPricingModal, setShowPricingModal] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -104,6 +106,12 @@ export default function Dashboard() {
                     <p className="font-semibold truncate">{user.displayName}</p>
                     <p className="text-gray-500 truncate">{user.email}</p>
                   </div>
+                  <button
+                    onClick={() => { setDropdownOpen(false); setShowPricingModal(true); }}
+                    className="w-full text-left px-4 py-3 hover:bg-gray-100 text-blue-600 font-medium"
+                  >
+                    ⭐ Upgrade to Pro
+                  </button>
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-3 hover:bg-gray-100 text-red-500 font-medium"
@@ -202,6 +210,12 @@ export default function Dashboard() {
         <AddEndpointModal
           onClose={() => setShowAddModal(false)}
           onSuccess={fetchEndpoints}
+          userEmail={user?.email ?? ""}
+        />
+      )}
+      {showPricingModal && (
+        <PricingModal
+          onClose={() => setShowPricingModal(false)}
           userEmail={user?.email ?? ""}
         />
       )}
